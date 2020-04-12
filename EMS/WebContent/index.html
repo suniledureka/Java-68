@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>edureka | ems</title>
+<style>
+ body{
+   margin:0px;
+   background:linear-gradient(to left,black,orangered);
+ }
+ #login_frm{
+   width:450px;
+   margin:auto;
+   margin-top:150px;
+   background:linear-gradient(45deg,darkslategray,blueviolet);
+   font-size:20px;   
+   padding:10px;
+   border-radius:20px;
+   color:white;
+   box-shadow:0 0 15px white;
+ }
+ table{
+  width:100%
+ }
+ tr{
+  height:40px;
+ }
+ input{
+   margin-bottom:20px;
+   font-size:20px;
+ }
+</style>
+<script>
+let xhr
+function getDetails(no)
+{
+ if(window.XMLHttpRequest)
+   xhr = new XMLHttpRequest();
+ else
+   xhr = new ActiveXObject("Microsoft.XMLHTTP")
+ 
+ xhr.open("GET","empDetails?eno="+no, true)
+ 
+ xhr.onreadystatechange = fun1 //to register a call back method with XHR
+ 
+ xhr.send() 
+}
+
+function fun1()
+{
+ //alert('state = '+xhr.readyState)	
+ if(xhr.readyState == 4 && xhr.status==200){
+   let response = xhr.responseText
+   let name='',sal=''
+   //alert(response.length)
+   if(response.length>2){
+	   response= JSON.parse(response) //to convert to JSON Object
+	   name = response.ename
+	   sal = response.salary
+   }
+   document.getElementById('emp_name').innerHTML = name
+   document.getElementById('emp_sal').innerHTML = sal
+ }
+	 
+}
+</script>
+</head>
+<body>
+  
+   <div id="login_frm">
+    <table>
+     <tr>
+      <td>Emp No</td>
+      <td>
+      <input type="text" id="eno" size=20 autofocus required onblur="getDetails(this.value)">
+      </td>
+    
+    
+    <tr>
+      <td>Name:</td>
+      <td>     
+      <span id="emp_name"></span>
+      </td>      
+    </tr>
+
+    <tr>
+     <td>Salary:</td>
+     <td>      
+      <span id="emp_sal"></span>
+      </td>      
+    </tr>
+   </table>     
+  </div>
+ 
+</body>
+</html>
